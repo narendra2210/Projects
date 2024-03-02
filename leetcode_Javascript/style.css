@@ -1,0 +1,29 @@
+.card{
+    background: #717070;
+    color: white;
+    margin: 30px auto;
+    padding: 10px;
+    border: 2px solid lightgray;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input{
+    margin : 30px auto;
+    margin-top: 10px;
+    height: 200px;
+    width: 80%;
+    display: block;
+    cursor: pointer;
+}
+
+.dark{
+    background: #1a1a1a;
+    color: white;
+    cursor: pointer;
+}
+
+.body{
+    cursor: pointer;
+}
+

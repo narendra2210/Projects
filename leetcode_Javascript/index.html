@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- for chat gpt code the api use -->
+    <script>
+        
+        const apiUrl = "https://api.openai.com/v1/chat/completions"
+        const apiKey = "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" // add your own key here
+
+        // As it takes time so it will use async await
+        async function postData(){
+
+            // this will take question from textarea
+            const message = document.getElementById('message').value
+            console.log(message);
+
+            if (apiKey === "") {
+                console.log("You forgot to add your own key !");
+            }
+
+            // ---> json is used for api working
+            // ---> Bearer is a type of token used for authentication and
+            // is used in web applications & APIsfor requests and access.
+            fetch(apiUrl, {
+                method: "POST",
+                // mode: "no-cors", // this will not give any error
+                headers: {
+                //    "Access-Control-Allow-Origin": "*", //BAD IDEA
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
+
+                },
+                body: JSON.stringify(
+                    {
+                        "model": "gpt-3.5-turbo",
+                        "messages": [
+                            {
+                                "role": "user",
+                                "content": `Write a javascript code for this question: ${message}`
+                            }
+                        ]
+                    }
+                )
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // ---> we have got data answer in string form now we 
+                // will use it and send it to textarea 
+                // --> A choice is a value a user can select
+                console.log("DONE");
+                const responseText = data.choices[0].message.content.trim()
+                // pre -> for the format to preserve
+                const card = document.createElement('pre')
+                card.innerHTML = responseText
+                document.getElementById('chat-area').appendChild(card)
+            })
+        }
+
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="dark">
+    <h1>Get any LEETCode solution in javascript | chatGPT</h1>
+    <form >
+        <label for="message">Enter your code statement: </label>
+        <textarea class="input"  id="message" cols="30" rows="10"></textarea>
+        <button type="button" onclick="postData()">Send me</button>
+        <div id="chat-area">test</div>
+    </form>
+</body>
+</html>
